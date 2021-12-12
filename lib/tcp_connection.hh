@@ -1,5 +1,5 @@
-#ifndef SPONGE_LIBSPONGE_TCP_FACTORED_HH
-#define SPONGE_LIBSPONGE_TCP_FACTORED_HH
+#ifndef TCP_CONNECTION
+#define TCP_CONNECTION
 
 #include "tcp_config.hh"
 #include "tcp_receiver.hh"
@@ -100,4 +100,6 @@ class TCPConnection {
     //!@}
 };
 
-#endif  // SPONGE_LIBSPONGE_TCP_FACTORED_HH
+
+
+#endif /* TCP_CONNECTION */

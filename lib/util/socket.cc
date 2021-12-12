@@ -5,6 +5,8 @@
 #include <cstddef>
 #include <stdexcept>
 #include <unistd.h>
+#include <netinet/tcp.h>
+#include <netinet/in.h>
 
 using namespace std;
 
@@ -127,3 +129,6 @@ void Socket::setsockopt(const int level, const int option, const option_type &op
 // allow local address to be reused sooner, at the cost of some robustness
 //! \note Using `SO_REUSEADDR` may reduce the robustness of your application
 void Socket::set_reuseaddr() { setsockopt(SOL_SOCKET, SO_REUSEADDR, int(true)); }
+
+void TCPSocket::set_nodelay() { setsockopt(IPPROTO_TCP, TCP_NODELAY, int(true)); }
+

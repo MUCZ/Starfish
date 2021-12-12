@@ -1,5 +1,5 @@
-#ifndef SPONGE_LIBSPONGE_PARSER_HH
-#define SPONGE_LIBSPONGE_PARSER_HH
+#ifndef PARSER
+#define PARSER
 
 #include "buffer.hh"
 
@@ -76,4 +76,6 @@ struct NetUnparser {
     static void u8(std::string &s, const uint8_t val);
 };
 
-#endif  // SPONGE_LIBSPONGE_PARSER_HH
+
+
+#endif /* PARSER */

@@ -1,5 +1,5 @@
-#ifndef SPONGE_LIBSPONGE_TCP_HEADER_HH
-#define SPONGE_LIBSPONGE_TCP_HEADER_HH
+#ifndef TCP_HEADER
+#define TCP_HEADER
 
 #include "parser.hh"
 #include "wrapping_integers.hh"
@@ -65,4 +65,6 @@ struct TCPHeader {
     bool operator==(const TCPHeader &other) const;
 };
 
-#endif  // SPONGE_LIBSPONGE_TCP_HEADER_HH
+
+
+#endif /* TCP_HEADER */

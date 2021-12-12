@@ -1,5 +1,5 @@
-#ifndef SPONGE_LIBSPONGE_TCP_STATE
-#define SPONGE_LIBSPONGE_TCP_STATE
+#ifndef TCP_STATE
+#define TCP_STATE
 
 #include "tcp_receiver.hh"
 #include "tcp_sender.hh"
@@ -79,4 +79,6 @@ const std::string FIN_SENT = "stream finished (FIN sent) but not fully acknowled
 const std::string FIN_ACKED = "stream finished and fully acknowledged";
 }  // namespace TCPSenderStateSummary
 
-#endif  // SPONGE_LIBSPONGE_TCP_STATE
+
+
+#endif /* TCP_STATE */

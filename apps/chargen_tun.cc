@@ -10,17 +10,12 @@ using namespace std;
 using namespace std::chrono;
 
 string message;
-const int batch = 80000;
+const int batch = 100000;
 int main(int argc,char* argv[]){
     if(argc > 2){
 
-        string line;
-        for(int i= 33; i<127; ++i){
-            line.push_back(char(i));
-        }
-
-        for(size_t i = 0; i < 127-33; ++i){
-            message+=line.substr(i,72)+'\n';
+        for(int i = 33; i<2033; ++i){
+            message.push_back(static_cast<char>(i));
         }
 
         string host = string(argv[1]);

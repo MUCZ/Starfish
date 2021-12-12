@@ -1,5 +1,5 @@
-#ifndef SPONGE_LIBSPONGE_TCP_RECEIVER_HH
-#define SPONGE_LIBSPONGE_TCP_RECEIVER_HH
+#ifndef TCP_RECEIVER
+#define TCP_RECEIVER
 
 #include "byte_stream.hh"
 #include "stream_reassembler.hh"
@@ -70,4 +70,6 @@ class TCPReceiver {
     //!@}
 };
 
-#endif  // SPONGE_LIBSPONGE_TCP_RECEIVER_HH
+
+
+#endif /* TCP_RECEIVER */

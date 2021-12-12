@@ -1,5 +1,5 @@
-#ifndef SPONGE_LIBSPONGE_ADDRESS_HH
-#define SPONGE_LIBSPONGE_ADDRESS_HH
+#ifndef ADDRESS
+#define ADDRESS
 
 #include <cstddef>
 #include <cstdint>
@@ -82,4 +82,6 @@ class Address {
 //!
 //! \include address_example_3.cc
 
-#endif  // SPONGE_LIBSPONGE_ADDRESS_HH
+
+
+#endif /* ADDRESS */

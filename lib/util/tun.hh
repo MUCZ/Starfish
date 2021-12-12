@@ -1,5 +1,5 @@
-#ifndef SPONGE_LIBSPONGE_TUN_HH
-#define SPONGE_LIBSPONGE_TUN_HH
+#ifndef TUN
+#define TUN
 
 #include "file_descriptor.hh"
 #include "util.hh"
@@ -35,4 +35,6 @@ class TunFD : public FileDescriptor  {
 };
 
 
-#endif  // SPONGE_LIBSPONGE_TUN_HH
+
+
+#endif /* TUN */

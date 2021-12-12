@@ -1,5 +1,5 @@
-#ifndef SPONGE_LIBSPONGE_BUFFER_HH
-#define SPONGE_LIBSPONGE_BUFFER_HH
+#ifndef BUFFER
+#define BUFFER
 
 #include <algorithm>
 #include <deque>
@@ -175,4 +175,6 @@ class BufferPlus {
     void remove_suffix(const size_t n);
 };
 
-#endif  // SPONGE_LIBSPONGE_BUFFER_HH
+
+
+#endif /* BUFFER */

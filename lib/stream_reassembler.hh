@@ -1,5 +1,5 @@
-#ifndef SPONGE_LIBSPONGE_STREAM_REASSEMBLER_HH
-#define SPONGE_LIBSPONGE_STREAM_REASSEMBLER_HH
+#ifndef STREAM_REASSEMBLER
+#define STREAM_REASSEMBLER
 
 #include "byte_stream.hh"
 #include "util/buffer.hh"
@@ -104,4 +104,6 @@ class StreamReassembler {
     bool empty() const;
 };
 
-#endif  // SPONGE_LIBSPONGE_STREAM_REASSEMBLER_HH
+
+
+#endif /* STREAM_REASSEMBLER */

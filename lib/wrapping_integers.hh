@@ -1,5 +1,5 @@
-#ifndef SPONGE_LIBSPONGE_WRAPPING_INTEGERS_HH
-#define SPONGE_LIBSPONGE_WRAPPING_INTEGERS_HH
+#ifndef WRAPPING_INTEGERS
+#define WRAPPING_INTEGERS
 
 #include <cmath>
 #include <cstdint>
@@ -64,4 +64,6 @@ inline WrappingInt32 operator+(WrappingInt32 a, uint32_t b) { return WrappingInt
 inline WrappingInt32 operator-(WrappingInt32 a, uint32_t b) { return a + -b; }
 //!@}
 
-#endif  // SPONGE_LIBSPONGE_WRAPPING_INTEGERS_HH
+
+
+#endif /* WRAPPING_INTEGERS */

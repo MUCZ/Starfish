@@ -1,5 +1,5 @@
-#ifndef SPONGE_LIBSPONGE_TCP_CONFIG_HH
-#define SPONGE_LIBSPONGE_TCP_CONFIG_HH
+#ifndef TCP_CONFIG
+#define TCP_CONFIG
 
 #include "address.hh"
 #include "wrapping_integers.hh"
@@ -32,4 +32,6 @@ class FdAdapterConfig {
     uint16_t loss_rate_up = 0;  //!< Uplink loss rate (for LossyFdAdapter)
 };
 
-#endif  // SPONGE_LIBSPONGE_TCP_CONFIG_HH
+
+
+#endif /* TCP_CONFIG */

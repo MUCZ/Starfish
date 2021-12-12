@@ -1,5 +1,5 @@
-#ifndef SPONGE_LIBSPONGE_IPV4_HEADER_HH
-#define SPONGE_LIBSPONGE_IPV4_HEADER_HH
+#ifndef IPV4_HEADER
+#define IPV4_HEADER
 
 #include "parser.hh"
 
@@ -68,4 +68,10 @@ struct IPv4Header {
 //! \struct IPv4Header
 //! This struct can be used to parse an existing IP header or to create a new one.
 
-#endif  // SPONGE_LIBSPONGE_IPV4_HEADER_HH
+
+
+
+
+
+
+#endif /* IPV4_HEADER */

@@ -1,5 +1,5 @@
-#ifndef SPONGE_LIBSPONGE_TCP_SPONGE_SOCKET_HH
-#define SPONGE_LIBSPONGE_TCP_SPONGE_SOCKET_HH
+#ifndef TCP_SPONGE_SOCKET
+#define TCP_SPONGE_SOCKET
 
 #include "byte_stream.hh"
 #include "eventloop.hh"
@@ -120,4 +120,6 @@ class CS144TCPSocket : public TCPOverIPv4SpongeSocket {
     void connect(const Address &address);
 };
 
-#endif  // SPONGE_LIBSPONGE_TCP_SPONGE_SOCKET_HH
+
+
+#endif /* TCP_SPONGE_SOCKET */

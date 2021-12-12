@@ -1,5 +1,5 @@
-#ifndef SPONGE_LIBSPONGE_IPV4_DATAGRAM_HH
-#define SPONGE_LIBSPONGE_IPV4_DATAGRAM_HH
+#ifndef IPV4_DATAGRAM
+#define IPV4_DATAGRAM
 
 #include "buffer.hh"
 #include "ipv4_header.hh"
@@ -29,4 +29,6 @@ class IPv4Datagram {
 
 using InternetDatagram = IPv4Datagram;
 
-#endif  // SPONGE_LIBSPONGE_IPV4_DATAGRAM_HH
+
+
+#endif /* IPV4_DATAGRAM */

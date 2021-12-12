@@ -1,5 +1,5 @@
-#ifndef SPONGE_LIBSPONGE_TCP_SENDER_HH
-#define SPONGE_LIBSPONGE_TCP_SENDER_HH
+#ifndef TCP_SENDER
+#define TCP_SENDER
 
 #include "byte_stream.hh"
 #include "tcp_config.hh"
@@ -128,4 +128,6 @@ class TCPSender {
     //!@}
 };
 
-#endif  // SPONGE_LIBSPONGE_TCP_SENDER_HH
+
+
+#endif /* TCP_SENDER */

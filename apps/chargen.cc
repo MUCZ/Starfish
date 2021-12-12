@@ -1,36 +1,34 @@
-#include "socket.hh"
+#include "tcp_sponge_socket.hh"
 #include "util.hh"
 
-#include <cstdlib>
 #include <chrono>
 #include <iomanip>
+#include <cstdlib>
 #include <iostream>
+#include "socket.hh"
 
 using namespace std;
 using namespace std::chrono;
 
 string message;
-const int batch = 80000;
+const int batch = 100000;
 int main(int argc,char* argv[]){
     if(argc > 2){
 
-        string line;
-        for(int i= 33; i<127; ++i){
-            line.push_back(char(i));
-        }
-
-        for(size_t i = 0; i < 127-33; ++i){
-            message+=line.substr(i,72)+'\n';
+        for(int i = 33; i<2033; ++i){
+            message.push_back(static_cast<char>(i));
         }
 
         string host = string(argv[1]);
         uint16_t port = static_cast<uint16_t>(atoi(argv[2]));
         TCPSocket sock;
 
+        sock.set_nodelay();
         const auto first_time = high_resolution_clock::now();
 
+
         sock.connect(Address(host,port));
-        for(int i = 0; i < batch; ++i){
+        for(int i = 0; i < batch ; ++i){
             sock.write(message); 
         }
         sock.close();
@@ -43,7 +41,7 @@ int main(int argc,char* argv[]){
         const auto gigabits_per_second = len * 8.0 * batch/ double(duration);
         const auto megabits_per_second = gigabits_per_second * 1000;
         cout << fixed << setprecision(2);
-        cout << "limited throughput " << megabits_per_second << " Mbit/s"<< " = " << megabits_per_second/8 << " MB/s"<<endl;
+        cout << "limited throughput " << megabits_per_second << " Mbit/s" << " = " << megabits_per_second/8 << " MB/s"<<endl;
         return 1;
 
     } else {

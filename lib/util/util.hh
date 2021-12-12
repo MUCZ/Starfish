@@ -1,5 +1,5 @@
-#ifndef SPONGE_LIBSPONGE_UTIL_HH
-#define SPONGE_LIBSPONGE_UTIL_HH
+#ifndef UTIL
+#define UTIL
 
 #include <algorithm>
 #include <cerrno>
@@ -69,4 +69,6 @@ void hexdump(const char *data, const size_t len, const size_t indent = 0);
 //! Hexdump the contents of a packet (or any other sequence of bytes)
 void hexdump(const uint8_t *data, const size_t len, const size_t indent = 0);
 
-#endif  // SPONGE_LIBSPONGE_UTIL_HH
+
+
+#endif /* UTIL */

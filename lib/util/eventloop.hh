@@ -1,5 +1,5 @@
-#ifndef SPONGE_LIBSPONGE_EVENTLOOP_HH
-#define SPONGE_LIBSPONGE_EVENTLOOP_HH
+#ifndef EVENTLOOP
+#define EVENTLOOP
 
 #include "file_descriptor.hh"
 
@@ -73,4 +73,8 @@ using Direction = EventLoop::Direction;
 //! same conditions, with the additional condition that if Rule::callback returns `true`, the
 //! Rule will be canceled.
 
-#endif  // SPONGE_LIBSPONGE_EVENTLOOP_HH
+
+
+
+
+#endif /* EVENTLOOP */

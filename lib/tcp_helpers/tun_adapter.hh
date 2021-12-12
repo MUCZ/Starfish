@@ -74,4 +74,6 @@ class TCPOverIPv4OverTunFdAdapter : public TCPOverIPv4Adapter {
     //! Access the underlying TUN device
     operator const TunFD &() const { return _tun; }
 };
+
+
 #endif /* TUN_ADAPTER */

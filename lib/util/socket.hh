@@ -1,5 +1,5 @@
-#ifndef SPONGE_LIBSPONGE_SOCKET_HH
-#define SPONGE_LIBSPONGE_SOCKET_HH
+#ifndef SOCKET
+#define SOCKET
 
 #include "address.hh"
 #include "file_descriptor.hh"
@@ -63,6 +63,8 @@ class TCPSocket : public Socket {
 
     //! Accept a new incoming connection
     TCPSocket accept();
+
+    void set_nodelay();
 };
 
 //! \class TCPSocket
@@ -84,4 +86,4 @@ class LocalStreamSocket : public Socket {
 //!
 //! \include socket_example_3.cc
 
-#endif  // SPONGE_LIBSPONGE_SOCKET_HH
+#endif /* SOCKET */

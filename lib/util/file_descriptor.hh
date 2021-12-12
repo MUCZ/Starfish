@@ -1,5 +1,5 @@
-#ifndef SPONGE_LIBSPONGE_FILE_DESCRIPTOR_HH
-#define SPONGE_LIBSPONGE_FILE_DESCRIPTOR_HH
+#ifndef FILE_DESCRIPTOR
+#define FILE_DESCRIPTOR
 
 #include "buffer.hh"
 
@@ -102,4 +102,6 @@ class FileDescriptor {
 //!
 //! For an example of FileDescriptor use, see the EventLoop class documentation.
 
-#endif  // SPONGE_LIBSPONGE_FILE_DESCRIPTOR_HH
+
+
+#endif /* FILE_DESCRIPTOR */

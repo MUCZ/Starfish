@@ -1,5 +1,5 @@
-#ifndef SPONGE_LIBSPONGE_BYTE_STREAM_HH
-#define SPONGE_LIBSPONGE_BYTE_STREAM_HH
+#ifndef BYTE_STREAM
+#define BYTE_STREAM
 
 #include "deque"
 #include "util/buffer.hh"
@@ -95,4 +95,6 @@ class ByteStream {
     //!@}
 };
 
-#endif  // SPONGE_LIBSPONGE_BYTE_STREAM_HH
+
+
+#endif /* BYTE_STREAM */
