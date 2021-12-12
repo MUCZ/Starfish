@@ -1,7 +1,7 @@
 // a chargen example using native Socket
 // send random char to <ip> <port>   
 // show throughput and quit after certain length sent
-#include "tcp_sponge_socket.hh"
+#include "tcp_tun_socket.hh"
 #include "util.hh"
 
 #include <chrono>

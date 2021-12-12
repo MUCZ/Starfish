@@ -1,6 +1,6 @@
 // A dummy implementation of netcat using TUNSocket
 #include "socket.hh"
-#include "tcp_sponge_socket.hh"
+#include "tcp_tun_socket.hh"
 #include "util.hh"
 
 #include <csignal>

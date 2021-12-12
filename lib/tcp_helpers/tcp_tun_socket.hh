@@ -1,5 +1,5 @@
-#ifndef TCP_SPONGE_SOCKET
-#define TCP_SPONGE_SOCKET
+#ifndef TCP_TUN_SOCKET
+#define TCP_TUN_SOCKET
 
 #include "byte_stream.hh"
 #include "eventloop.hh"
@@ -118,4 +118,4 @@ class TUNSocket : public LocalStreamSocket {
 
 
 
-#endif /* TCP_SPONGE_SOCKET */
+#endif /* TCP_TUN_SOCKET */
