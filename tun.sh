@@ -14,7 +14,7 @@ check_sudo(){
 }
 
 start_tun(){
-    local TUNNUM="$1" TUNDEV="tun$1"
+    local TUNNUM="$1" TUNDEV="starfish_tun"
     ip tuntap add mode tun user "${SUDO_USER}" name "${TUNDEV}"   # create tun interface for this user
     ip addr add "${TUN_IP_PREFIX}.${TUNNUM}.1/24" dev "${TUNDEV}" # assign ip to tun device 
     ip link set dev "${TUNDEV}" up                                # enable created tun device
@@ -27,7 +27,7 @@ start_tun(){
 }
 
 stop_tun () {
-    local TUNDEV="tun$1"
+    local TUNDEV="starfish_tun"
     iptables -t nat -D PREROUTING -s ${TUN_IP_PREFIX}.${1}.0/24 -j CONNMARK --set-mark ${1}
     iptables -t nat -D POSTROUTING -j MASQUERADE -m connmark --mark ${1}
     ip tuntap del mode tun name "$TUNDEV"

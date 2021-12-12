@@ -15,7 +15,7 @@
 #include <vector>
 
 //! Multithreaded wrapper around TCPConnection that approximates the Unix sockets API
-class TCPSpongeSocket : public LocalStreamSocket {
+class TUNSocket : public LocalStreamSocket {
   private:
     //! Stream socket for reads and writes between owner and TCP thread
     LocalStreamSocket _thread_data;
@@ -42,11 +42,11 @@ class TCPSpongeSocket : public LocalStreamSocket {
     std::thread _tcp_thread{};
 
     //! Construct LocalStreamSocket fds from socket pair, initialize eventloop
-    TCPSpongeSocket(std::pair<FileDescriptor, FileDescriptor> data_socket_pair, TCPOverIPv4OverTunFdAdapter &&datagram_interface);
+    TUNSocket(std::pair<FileDescriptor, FileDescriptor> data_socket_pair, TCPOverIPv4OverTunFdAdapter &&datagram_interface);
 
     std::atomic_bool _abort{false};  //!< Flag used by the owner to force the TCPConnection thread to shut down
 
-    bool _inbound_shutdown{false};  //!< Has TCPSpongeSocket shut down the incoming data to the owner?
+    bool _inbound_shutdown{false};  //!< Has TUNSocket shut down the incoming data to the owner?
 
     bool _outbound_shutdown{false};  //!< Has the owner shut down the outbound data to the TCP connection?
 
@@ -54,7 +54,7 @@ class TCPSpongeSocket : public LocalStreamSocket {
 
   public:
     //! Construct from the interface that the TCPConnection thread will use to read and write datagrams
-    explicit TCPSpongeSocket(TCPOverIPv4OverTunFdAdapter &&datagram_interface);
+    explicit TUNSocket(TCPOverIPv4OverTunFdAdapter &&datagram_interface = TCPOverIPv4OverTunFdAdapter(TunFD("starfish_tun")));
 
     //! Close socket, and wait for TCPConnection to finish
     //! \note Calling this function is only advisable if the socket has reached EOF,
@@ -64,20 +64,24 @@ class TCPSpongeSocket : public LocalStreamSocket {
     //! Connect using the specified configurations; blocks until connect succeeds or fails
     void connect(const TCPConfig &c_tcp, const FdAdapterConfig &c_ad);
 
+    void connect(const Address &address);
+
     //! Listen and accept using the specified configurations; blocks until accept succeeds or fails
     void listen_and_accept(const TCPConfig &c_tcp, const FdAdapterConfig &c_ad);
 
+    bool in_bound_shutdown() const {return _inbound_shutdown;}
+    bool out_bound_shutdown() const { return _outbound_shutdown; }
     //! When a connected socket is destructed, it will send a RST
-    ~TCPSpongeSocket();
+    ~TUNSocket();
 
     //! \name
     //! This object cannot be safely moved or copied, since it is in use by two threads simultaneously
 
     //!@{
-    TCPSpongeSocket(const TCPSpongeSocket &) = delete;
-    TCPSpongeSocket(TCPSpongeSocket &&) = delete;
-    TCPSpongeSocket &operator=(const TCPSpongeSocket &) = delete;
-    TCPSpongeSocket &operator=(TCPSpongeSocket &&) = delete;
+    TUNSocket(const TUNSocket &) = delete;
+    TUNSocket(TUNSocket &&) = delete;
+    TUNSocket &operator=(const TUNSocket &) = delete;
+    TUNSocket &operator=(TUNSocket &&) = delete;
     //!@}
 
     //! \name
@@ -91,7 +95,7 @@ class TCPSpongeSocket : public LocalStreamSocket {
     //!@}
 };
 
-//! \class TCPSpongeSocket
+//! \class TUNSocket
 //! This class involves the simultaneous operation of two threads.
 //!
 //! One, the "owner" or foreground thread, interacts with this class in much the
@@ -103,22 +107,14 @@ class TCPSpongeSocket : public LocalStreamSocket {
 //! perform for a TCPSocket: reading and parsing datagrams from the wire, filtering out
 //! segments unrelated to the connection, etc.
 //!
-//! There are a few notable differences between the TCPSpongeSocket and TCPSocket interfaces:
+//! There are a few notable differences between the TUNSocket and TCPSocket interfaces:
 //!
-//! - a TCPSpongeSocket can only accept a single connection
+//! - a TUNSocket can only accept a single connection
 //! - listen_and_accept() is a blocking function call that acts as both [listen(2)](\ref man2::listen)
 //!   and [accept(2)](\ref man2::accept)
-//! - if TCPSpongeSocket is destructed while a TCP connection is open, the connection is
+//! - if TUNSocket is destructed while a TCP connection is open, the connection is
 //!   immediately terminated with a RST (call `wait_until_closed` to avoid this)
 
-typedef TCPSpongeSocket TCPOverIPv4SpongeSocket ;
-
-//! Helper class that makes a TCPOverIPv4SpongeSocket behave more like a (kernel) TCPSocket
-class CS144TCPSocket : public TCPOverIPv4SpongeSocket {
-  public:
-    CS144TCPSocket();
-    void connect(const Address &address);
-};
 
 
 

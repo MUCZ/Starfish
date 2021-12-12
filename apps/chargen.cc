@@ -1,3 +1,6 @@
+// a chargen example using native Socket
+// send random char to <ip> <port>   
+// show throughput and quit after certain length sent
 #include "tcp_sponge_socket.hh"
 #include "util.hh"
 
@@ -11,7 +14,7 @@ using namespace std;
 using namespace std::chrono;
 
 string message;
-const int batch = 100000;
+const int batch = 50000;
 int main(int argc,char* argv[]){
     if(argc > 2){
 

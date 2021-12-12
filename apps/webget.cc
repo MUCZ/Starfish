@@ -9,7 +9,7 @@ using namespace std;
 
 void get_URL(const string &host, const string &path) {
 
-    CS144TCPSocket sock{};
+    TUNSocket sock{};
     sock.connect(Address(host, "http"));
     sock.write("GET " + path + " HTTP/1.1\r\nHost: " + host + "\r\n\r\n");
     sock.shutdown(SHUT_WR);
@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
 
         if (argc != 3) {
             cerr << "Usage: " << argv[0] << " HOST PATH\n";
-            cerr << "\tExample: " << argv[0] << " stanford.edu /class/cs144\n";
+            cerr << "\tExample: " << argv[0] << "www.gitee.com /mucz\n";
             return EXIT_FAILURE;
         }
 

@@ -20,7 +20,7 @@ using namespace std;
 static constexpr size_t TCP_TICK_MS = 10;
 
 //! \param[in] condition is a function returning true if loop should continue
-void TCPSpongeSocket::_tcp_loop(const function<bool()> &condition) {
+void TUNSocket::_tcp_loop(const function<bool()> &condition) {
     auto base_time = timestamp_ms();
     while (condition()) {
         auto ret = _eventloop.wait_next_event(TCP_TICK_MS);
@@ -39,7 +39,7 @@ void TCPSpongeSocket::_tcp_loop(const function<bool()> &condition) {
 
 //! \param[in] data_socket_pair is a pair of connected AF_UNIX SOCK_STREAM sockets
 //! \param[in] datagram_interface is the interface for reading and writing datagrams
-TCPSpongeSocket::TCPSpongeSocket(pair<FileDescriptor, FileDescriptor> data_socket_pair,
+TUNSocket::TUNSocket(pair<FileDescriptor, FileDescriptor> data_socket_pair,
                                          TCPOverIPv4OverTunFdAdapter &&datagram_interface)
     : LocalStreamSocket(move(data_socket_pair.first))
     , _thread_data(move(data_socket_pair.second))
@@ -47,7 +47,7 @@ TCPSpongeSocket::TCPSpongeSocket(pair<FileDescriptor, FileDescriptor> data_socke
     _thread_data.set_blocking(false);
 }
 
-void TCPSpongeSocket::_initialize_TCP(const TCPConfig &config) {
+void TUNSocket::_initialize_TCP(const TCPConfig &config) {
     _tcp.emplace(config);
 
     // Set up the event loop
@@ -169,25 +169,25 @@ static inline pair<FileDescriptor, FileDescriptor> socket_pair_helper(const int 
 
 //! \param[in] datagram_interface is the underlying interface (e.g. to UDP, IP, or Ethernet)
 
-TCPSpongeSocket::TCPSpongeSocket(TCPOverIPv4OverTunFdAdapter &&datagram_interface)
-    : TCPSpongeSocket(socket_pair_helper(SOCK_STREAM), move(datagram_interface)) {}
+TUNSocket::TUNSocket(TCPOverIPv4OverTunFdAdapter &&datagram_interface)
+    : TUNSocket(socket_pair_helper(SOCK_STREAM), move(datagram_interface)) {}
 
 
-TCPSpongeSocket::~TCPSpongeSocket() {
+TUNSocket::~TUNSocket() {
     try {
         if (_tcp_thread.joinable()) {
-            cerr << "Warning: unclean shutdown of TCPSpongeSocket\n";
+            cerr << "Warning: unclean shutdown of TUNSocket\n";
             // force the other side to exit
             _abort.store(true);
             _tcp_thread.join();
         }
     } catch (const exception &e) {
-        cerr << "Exception destructing TCPSpongeSocket: " << e.what() << endl;
+        cerr << "Exception destructing TUNSocket: " << e.what() << endl;
     }
 }
 
 
-void TCPSpongeSocket::wait_until_closed() {
+void TUNSocket::wait_until_closed() {
     shutdown(SHUT_RDWR);
     if (_tcp_thread.joinable()) {
         cerr << "DEBUG: Waiting for clean shutdown... ";
@@ -199,7 +199,7 @@ void TCPSpongeSocket::wait_until_closed() {
 //! \param[in] c_tcp is the TCPConfig for the TCPConnection
 //! \param[in] c_ad is the FdAdapterConfig for the FdAdapter
 
-void TCPSpongeSocket::connect(const TCPConfig &c_tcp, const FdAdapterConfig &c_ad) {
+void TUNSocket::connect(const TCPConfig &c_tcp, const FdAdapterConfig &c_ad) {
     if (_tcp) {
         throw runtime_error("connect() with TCPConnection already initialized");
     }
@@ -221,13 +221,13 @@ void TCPSpongeSocket::connect(const TCPConfig &c_tcp, const FdAdapterConfig &c_a
     _tcp_loop([&] { return _tcp->state() == TCPState::State::SYN_SENT; });
     cerr << "done.\n";
 
-    _tcp_thread = thread(&TCPSpongeSocket::_tcp_main, this);
+    _tcp_thread = thread(&TUNSocket::_tcp_main, this);
 }
 
 //! \param[in] c_tcp is the TCPConfig for the TCPConnection
 //! \param[in] c_ad is the FdAdapterConfig for the FdAdapter
 
-void TCPSpongeSocket::listen_and_accept(const TCPConfig &c_tcp, const FdAdapterConfig &c_ad) {
+void TUNSocket::listen_and_accept(const TCPConfig &c_tcp, const FdAdapterConfig &c_ad) {
     if (_tcp) {
         throw runtime_error("listen_and_accept() with TCPConnection already initialized");
     }
@@ -244,11 +244,11 @@ void TCPSpongeSocket::listen_and_accept(const TCPConfig &c_tcp, const FdAdapterC
     });
     cerr << "new connection from " << _datagram_adapter.config().destination.to_string() << ".\n";
 
-    _tcp_thread = thread(&TCPSpongeSocket::_tcp_main, this);
+    _tcp_thread = thread(&TUNSocket::_tcp_main, this);
 }
 
 
-void TCPSpongeSocket::_tcp_main() {
+void TUNSocket::_tcp_main() {
     try {
         if (not _tcp.has_value()) {
             throw runtime_error("no TCP");
@@ -267,15 +267,16 @@ void TCPSpongeSocket::_tcp_main() {
 }
 
 
-CS144TCPSocket::CS144TCPSocket() : TCPOverIPv4SpongeSocket(TCPOverIPv4OverTunFdAdapter(TunFD("tun144"))) {}
 
-void CS144TCPSocket::connect(const Address &address) {
+void TUNSocket::connect(const Address &address) {
     TCPConfig tcp_config;
     tcp_config.rt_timeout = 100;
 
     FdAdapterConfig multiplexer_config;
-    multiplexer_config.source = {"169.254.144.9", to_string(uint16_t(random_device()()))};
+    multiplexer_config.source = {"169.254.144.1", to_string(uint16_t(random_device()()))};
     multiplexer_config.destination = address;
 
-    TCPOverIPv4SpongeSocket::connect(tcp_config, multiplexer_config);
+    connect(tcp_config, multiplexer_config);
 }
+
+

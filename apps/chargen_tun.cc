@@ -1,3 +1,6 @@
+// a chargen example using TUNSocket
+// send random char to <ip> <port>   
+// show throughput and quit after certain length sent
 #include "tcp_sponge_socket.hh"
 #include "util.hh"
 
@@ -10,7 +13,7 @@ using namespace std;
 using namespace std::chrono;
 
 string message;
-const int batch = 100000;
+const int batch = 50000;
 int main(int argc,char* argv[]){
     if(argc > 2){
 
@@ -20,7 +23,7 @@ int main(int argc,char* argv[]){
 
         string host = string(argv[1]);
         uint16_t port = static_cast<uint16_t>(atoi(argv[2]));
-        CS144TCPSocket sock;
+        TUNSocket sock;
 
         const auto first_time = high_resolution_clock::now();
 
