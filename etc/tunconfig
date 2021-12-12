@@ -1,0 +1,3 @@
+# address of tun advice
+# see [https://en.wikipedia.org/wiki/Link-local_address]
+TUN_IP_PREFIX=169.254

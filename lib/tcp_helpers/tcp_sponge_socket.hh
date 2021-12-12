@@ -112,6 +112,7 @@ class TCPSpongeSocket : public LocalStreamSocket {
 //!   immediately terminated with a RST (call `wait_until_closed` to avoid this)
 
 typedef TCPSpongeSocket TCPOverIPv4SpongeSocket ;
+
 //! Helper class that makes a TCPOverIPv4SpongeSocket behave more like a (kernel) TCPSocket
 class CS144TCPSocket : public TCPOverIPv4SpongeSocket {
   public:

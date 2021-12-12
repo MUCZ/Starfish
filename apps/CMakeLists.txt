@@ -1,2 +1,6 @@
 add_exec (webget)
 add_exec (tcp_benchmark)
+add_exec (chargen)
+add_exec (chargen_tun)
+add_exec (chargen_short_tun)
+add_exec (chargen_short)

@@ -31,5 +31,7 @@ build/
 *.exe
 *.out
 *.app
+
 .vscode/
 .VSCodeCounter/
+.sudo_gdb.sh

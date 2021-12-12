@@ -266,17 +266,6 @@ void TCPSpongeSocket::_tcp_main() {
     }
 }
 
-//! Specialization of TCPSpongeSocket for TCPOverUDPSocketAdapter
-// template class TCPSpongeSocket<TCPOverUDPSocketAdapter>;
-
-//! Specialization of TCPSpongeSocket for TCPOverIPv4OverTunFdAdapter
-// template class TCPSpongeSocket<TCPOverIPv4OverTunFdAdapter>;
-
-//! Specialization of TCPSpongeSocket for LossyTCPOverUDPSocketAdapter
-// template class TCPSpongeSocket<LossyTCPOverUDPSocketAdapter>;
-
-//! Specialization of TCPSpongeSocket for LossyTCPOverIPv4OverTunFdAdapter
-// template class TCPSpongeSocket<LossyTCPOverIPv4OverTunFdAdapter>;
 
 CS144TCPSocket::CS144TCPSocket() : TCPOverIPv4SpongeSocket(TCPOverIPv4OverTunFdAdapter(TunFD("tun144"))) {}
 
