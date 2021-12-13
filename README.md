@@ -87,3 +87,5 @@ An Eventloop-based user-level TCP stack.
 - readme写完
 - 画几个简单的原理图
 - 修复只能开一个tunsocket的问题
+- 实现一个简单的VPN协议
+- 修复localhost不好用的问题
