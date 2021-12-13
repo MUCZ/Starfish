@@ -1,2 +1,0 @@
-
-echo "$(dirname "$0")"
