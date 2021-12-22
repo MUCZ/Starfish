@@ -13,21 +13,21 @@
 </p>
 
 # 用途
-  - 学习用途，TCP协议\事件循环模式\网络编程\虚拟网络\iptables\隧道代理\现代C++相关
-  - 利用TUNSocket的封装，可以实现OpenVPN等类似协议,实现IP层级别的隧道代理工具(与socks,shadowsocks等*socks协议的不同，在于后者是TCP\UDP级别的代理)
+  - **学习用途**，TCP协议\事件循环模式\网络编程\虚拟网络\iptables\隧道代理\现代C++相关
+  - 利用TUNSocket的封装，可以**实现OpenVPN等VPN协议,实现IP层级别的隧道代理工具**(与socks,shadowsocks等*socks协议的不同，在于后者是TCP\UDP级别的代理)
     - OpenVPN客户端：将所有流量路由至TUN设备，在应用层处理数据（例如加密）后重新封装流量，经物理网卡发送至代理
     - OpenVPN代理端：由物理网卡接受流量，在应用层处理（例如解密）后重新封装经TUN设备路由至内网,实现虚拟网络加密代理访问
     - 服务端：感知不到代理的存在，认为接受到的客户的IP地址即客户的真实地址 (在*socks协议代理的情况下，服务端收到的ip是代理的ip，因此无法区分同一个代理服务器的多个客户的IP)
     - ![tunsocket_vpn](./img/tunsocket_vpn.png)
-  - 本仓库实现了"my dummy TCP over IP",可用类似的模式实现'"user-defined protocol" over UDP', 与现有网络基础设施兼容的同时使用用户自定义的可靠传输协议，谷歌的QUIC即是这种模式
-  - 用于构建测试程序，例如构建三次握手的TCP数据包而不用分配缓冲区，低成本地模拟压力负载或恶意攻击
+  - 本仓库实现了"my dummy TCP over IP",**可用类似的模式实现'"user-defined protocol" over UDP'**, 与现有网络基础设施兼容的同时使用用户自定义的可靠传输协议，例如，谷歌的QUIC即是这种模式
+  - 用于**构建测试程序**，例如构建三次握手的TCP数据包而不用分配缓冲区，**低成本地模拟压力负载或恶意攻击**
 
 # 例程 
 
 - /apps/netcat : 基于TUNSocket的netcat服务，支持与真实nc客户端通信
 - /apps/chargen_tun : 基于TUNSocket的chargen服务，主动发起连接后向另一端发送任意字符，发送完成后输出带宽，用于衡量性能
 - /apps/chargen : 同上，但使用的是原生Socket，提供性能对照
-- /apps/webget : 一个简单的http客户端，向服务器发送GET指定URL的HTTP协议
+- /apps/webget : 基于TUNSocket的一个简单的http客户端，向服务器发送GET指定URL的HTTP协议
 - /apps/tcp_benchmark : 测试tcp协议实现性能的例程
 
 # 说明
