@@ -9,7 +9,7 @@
 - 底层使用基于智能指针的的zero-copy Buffer 和 scatter-gather I/O实现高性能
 
 <p align="center">
-  <img src="https://github.com/mucz/starfish/img/tunsocket.png">
+  <img src="https://github.com/MUCZ/Starfish/blob/main/img/tunsocket.png">
 </p>
 
 # 用途
