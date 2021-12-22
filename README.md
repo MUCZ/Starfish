@@ -30,22 +30,22 @@
 
 编译代码
 
- `mkdir build`
-
- `cd build`
-
- `make -j8` 
+ ``` bash
+ mkdir build
+ cd build
+ make -j8
+ ```
 
 运行例程
     配置tun设备及开启路由
 
-     `sudo ../tun.sh start`
+    `sudo ../tun.sh start`
 
  -  chargen 带宽测试
 
     在B主机运行
 
-      `sudo nc -l <port> >/dev/null` 
+    `sudo nc -l <port> >/dev/null` 
 
     在A主机运行 
 
@@ -56,10 +56,15 @@
  -  webget
 
     在B主机编译simple_http_server
-    `cd /simple_http_server`
-    `go build simple_http_server`
+
+    ``` bash
+    cd /simple_http_server
+    go build simple_http_server
+    ```
+
     运行服务器
     `./sudo simple_http_server `
+
     在A主机运行
     `./apps/webget <ip of B> /hello`
     `./apps/webget <ip of B> /bye`
