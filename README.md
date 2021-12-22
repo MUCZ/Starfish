@@ -1,14 +1,15 @@
 # Starfish 
 ## An Eventloop-based user-level TCP stack.
 
-![tunsocket](./img/tunsocket.png)
-
 # 介绍
 
 - 使用C++17，基于事件循环模式的用户态套接字网络编程基础库
 - 基于Linux/tun设备直接收发ip数据报，在用户态构建TPC Header, **允许本机发出具有任意IP地址的TCP数据包**
 - 实现了TCP协议的主要部分: 基于累计确认和超时重传的可靠传输和基于滑动窗口的流量控制 
 - 底层使用基于智能指针的的zero-copy Buffer 和 scatter-gather I/O实现高性能
+
+![tunsocket](./img/tunsocket.png)
+
 
 # 用途
   - 学习用途，TCP协议\事件循环模式\网络编程\虚拟网络\iptables\隧道代理\现代C++相关
