@@ -8,7 +8,7 @@
 - 实现了TCP协议的主要部分: 基于累计确认和超时重传的可靠传输和基于滑动窗口的流量控制 
 - 底层使用基于智能指针的的zero-copy Buffer 和 scatter-gather I/O实现高性能
 
-<div align=center>![tunsocket](./img/tunsocket.png)<div align=center>
+<div align=center>![tunsocket](./img/tunsocket.png)</div>
 
 
 # 用途
