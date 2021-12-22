@@ -6,7 +6,7 @@
 - 使用C++17，基于事件循环模式的用户态套接字网络编程基础库
 - 基于Linux/tun设备直接收发ip数据报，在用户态构建TCP Header, **允许本机发出具有任意IP地址的TCP数据包**
 - 实现了TCP协议的主要部分: 基于累计确认和超时重传的可靠传输和基于滑动窗口的流量控制 
-- 底层使用基于智能指针的的zero-copy Buffer 和 scatter-gather I/O实现高性能
+- 底层使用基于智能指针的的zero-copy Buffer 和 scatter-gather I/O减少冗余拷贝实现高性能
 
 <p align="center">
   <img src="https://github.com/MUCZ/Starfish/blob/main/img/tunsocket.png">
