@@ -5,10 +5,12 @@
 
 # 介绍
 
-- 基于事件循环模式的用户态套接字网络编程基础库
+- 使用C++17，基于事件循环模式的用户态套接字网络编程基础库
 - 基于Linux/tun设备直接收发ip数据报，在用户态构建TPC Header, **允许本机发出具有任意IP地址的TCP数据包**
-- 实现了TCP协议的主要两大部分: 基于累计确认和超时重传的可靠传输和基于滑动窗口的流量控制 
-- **用途**
+- 实现了TCP协议的主要部分: 基于累计确认和超时重传的可靠传输和基于滑动窗口的流量控制 
+- 底层使用基于智能指针的的zero-copy Buffer 和 scatter-gather I/O实现高性能
+
+# 用途
   - 学习用途，TCP协议\事件循环模式\网络编程\虚拟网络\iptables\隧道代理\现代C++相关
   - 利用TUNSocket的封装，可以实现OpenVPN等类似协议,实现IP层级别的隧道代理工具(与socks,shadowsocks等*socks协议的不同，在于后者是TCP\UDP级别的代理)
     - OpenVPN客户端：将所有流量路由至TUN设备，在应用层处理数据（例如加密）后重新封装流量，经物理网卡发送至代理
@@ -26,6 +28,51 @@
 - /apps/webget : 一个简单的http客户端，向服务器发送GET指定URL的HTTP协议
 - /apps/tcp_benchmark : 测试tcp协议实现性能的例程
 
+# 说明
+
+- /apps : 应用例程
+- /etc : CMAKE的宏、C++编译选项、以及tun.sh设备需要用到的地址设置
+- /tests : 测试夹具和单元测试
+- /tun.sh : 用于开启/关闭tun设备以及对应的端口转发和NAT功能
+- /lib 
+  - / : TCP协议的实现
+  - /tcp_helpers : TCP和IP的数据格式和对应的解编码器，TUNSocket的实现
+  - /util : address \ buffer \ file descriptors \ parser \ socket \ tun \ syscall \ runtime err 等的封装
+
+
+# 性能
+- 使用chargen \ chargen_tun \ 和nc对比，可知用户态TUNSocket的实现了原生Socket1/4的性能，这是由于内核态到用户态的复制开销和虚拟网卡引入的额外的路由成本
+
+# 使用TUNSocket
+- 使用指定的TUNSocket设备名： 
+  ```C++
+    TUNSocket tunsock0; // 缺省设备名
+    TUNSocket tunsock1("tun1"); // 自定义设备名
+  ```
+
+- 指定TUNSocket发出的TCP包的源ip地址：
+  ```C++
+    TUNSocket tunsock1("tun1")
+    // tunsock1.connect(dest_ip); // 使用缺省源ip设置
+    tunsock1.connect("169.254.144.2",destination_ip) //使用用户指定源ip
+  ```
+
+- 设置TUNSocket超时重传时间
+   ```C++
+      TUNSocket tunsock;
+      TCPConfig tcp_config;
+      tcp_config.rt_timeout = 100;
+      tunsock.connect(tcp_config,destination_ip);
+   ```
+
+- 设置TUNSocket缓存区大小 
+   ```C++
+      TUNSocket tunsock;
+      TCPConfig tcp_config;
+      tcp_config.recv_capacity = 64000;
+      tunsock.connect(tcp_config,destination_ip);
+   ```
+
 # 运行例程
 
 编译代码
@@ -41,7 +88,7 @@
 
     `sudo ../tun.sh start`
 
- -  chargen 带宽测试
+ -  chargen服务，传完完毕后显示运行传输带宽
 
     在B主机运行
 
@@ -63,11 +110,13 @@
     ```
 
     运行服务器
-    `./sudo simple_http_server `
+    `./sudo simple_http_server`
 
     在A主机运行
-    `./apps/webget <ip of B> /hello`
-    `./apps/webget <ip of B> /bye`
+
+      `./apps/webget <ip of B> /hello`
+      和
+      `./apps/webget <ip of B> /bye`
 
  -  netcat
 
@@ -84,36 +133,3 @@
         `./netcat <ip of B> 8080`
 
     两主机建立了TCP连接，终端内的输入将会被传输给对方
-
-# 结构说明
-
-- /apps : 应用例程
-- /etc : CMAKE的宏、C++编译选项、以及tun.sh设备需要用到的地址设置
-- /tests : 测试夹具和单元测试
-- /tun.sh : 用于开启/关闭tun设备以及对应的端口转发和NAT功能
-- /lib 
-  - / : TCP协议的实现
-  - /tcp_helpers : TCP和IP的数据格式和对应的解编码器，TUNSocket的实现
-  - /util : address \ buffer \ file descriptors \ parser \ socket \ tun \ syscall \ runtime err 等的封装
-
-
-# 性能
-- 使用chargen \ chargen_tun \ 和nc对比，可知用户态TUNSocket的实现了原生Socket1/4的性能，这是由于内核态到用户态的复制开销和虚拟网卡引入的额外的路由成本
-
-# 使用Starfish
-
-
-!todo
-- 代码注释风格修改
-- 代码压缩，去掉没有用到的代码
-
-- 性能调优，看看知乎的回复的人的性能（基于环形缓冲的性能如何）(以及BUFFER的性能如何)
-<!-- - 测试例程 -->
-<!-- - 补充测试 -->
-- readme写完
-
-- 画几个简单的原理图
-
-- 修复只能开一个tunsocket的问题
-- 实现一个简单的VPN协议
-- 修复localhost不好用的问题
