@@ -4,7 +4,7 @@
 #include "buffer.hh"
 #include "ipv4_header.hh"
 
-//! \brief [IPv4](\ref rfc::rfc791) Internet datagram
+// Internet datagram
 class IPv4Datagram {
   private:
     IPv4Header _header{};

@@ -54,7 +54,11 @@ class TUNSocket : public LocalStreamSocket {
 
   public:
     //! Construct from the interface that the TCPConnection thread will use to read and write datagrams
+    //! Using the default name for tun device
     explicit TUNSocket(TCPOverIPv4OverTunFdAdapter &&datagram_interface = TCPOverIPv4OverTunFdAdapter(TunFD("starfish_tun")));
+    //! Using user-defined name, NOTE: make sure the tun device is available and the related routing rules are configured.
+    explicit TUNSocket(std::string name);
+
 
     //! Close socket, and wait for TCPConnection to finish
     //! \note Calling this function is only advisable if the socket has reached EOF,
@@ -63,8 +67,11 @@ class TUNSocket : public LocalStreamSocket {
 
     //! Connect using the specified configurations; blocks until connect succeeds or fails
     void connect(const TCPConfig &c_tcp, const FdAdapterConfig &c_ad);
-
+    //! Connect using default source ip
     void connect(const Address &address);
+    //! Connect using assigned source_ip, NOTE: route rule for related source ip should be configured using `iptables`
+    void connect(const std::string source_ip, const Address &address);
+
 
     //! Listen and accept using the specified configurations; blocks until accept succeeds or fails
     void listen_and_accept(const TCPConfig &c_tcp, const FdAdapterConfig &c_ad);

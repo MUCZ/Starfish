@@ -172,6 +172,9 @@ static inline pair<FileDescriptor, FileDescriptor> socket_pair_helper(const int 
 TUNSocket::TUNSocket(TCPOverIPv4OverTunFdAdapter &&datagram_interface)
     : TUNSocket(socket_pair_helper(SOCK_STREAM), move(datagram_interface)) {}
 
+TUNSocket::TUNSocket(std::string name)
+    : TUNSocket(socket_pair_helper(SOCK_STREAM), move(TCPOverIPv4OverTunFdAdapter(TunFD(name)))) {}
+
 
 TUNSocket::~TUNSocket() {
     try {
@@ -274,6 +277,17 @@ void TUNSocket::connect(const Address &address) {
 
     FdAdapterConfig multiplexer_config;
     multiplexer_config.source = {"169.254.144.1", to_string(uint16_t(random_device()()))};
+    multiplexer_config.destination = address;
+
+    connect(tcp_config, multiplexer_config);
+}
+
+void TUNSocket::connect(const string source_ip, const Address &address) {
+    TCPConfig tcp_config;
+    tcp_config.rt_timeout = 100;
+
+    FdAdapterConfig multiplexer_config;
+    multiplexer_config.source = {source_ip, to_string(uint16_t(random_device()()))};
     multiplexer_config.destination = address;
 
     connect(tcp_config, multiplexer_config);
