@@ -29,20 +29,32 @@
 # 运行例程
 
 编译代码
+
  `mkdir build`
+
  `cd build`
+
  `make -j8` 
+
 运行例程
     配置tun设备及开启路由
+
      `sudo ../tun.sh start`
- -  1 chargen 带宽测试
-    在B主机运行 `sudo nc -l <port> >/dev/null` 
+
+ -  chargen 带宽测试
+
+    在B主机运行
+
+      `sudo nc -l <port> >/dev/null` 
+
     在A主机运行 
+
     `./apps/chargen.cc <ip of B> <port>`
     或
     `./apps/chargen_tun.cc <ip of B> <port>`
 
- -  2 webget
+ -  webget
+
     在B主机编译simple_http_server
     `cd /simple_http_server`
     `go build simple_http_server`
@@ -52,15 +64,20 @@
     `./apps/webget <ip of B> /hello`
     `./apps/webget <ip of B> /bye`
 
- -  3 netcat
+ -  netcat
+
     在B主机监听某一端口
+
         `nc -l 8080`
         或
         `./netcat -l 8080`
+
     从A主机向B主机建立连接
+
         `nc <ip of B> 8080`
         或
         `./netcat <ip of B> 8080`
+
     两主机建立了TCP连接，终端内的输入将会被传输给对方
 
 # 结构说明
