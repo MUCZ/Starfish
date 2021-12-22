@@ -18,9 +18,9 @@
     - OpenVPN客户端：将所有流量路由至TUN设备，在应用层处理数据（例如加密）后重新封装流量，经物理网卡发送至代理
     - OpenVPN代理端：由物理网卡接受流量，在应用层处理（例如解密）后重新封装经TUN设备路由至内网,实现虚拟网络加密代理访问
     - 服务端：感知不到代理的存在，认为接受到的客户的IP地址即客户的真实地址 (在*socks协议代理的情况下，服务端收到的ip是代理的ip，因此无法区分同一个代理服务器的多个客户的IP)
-    <p align="center">
-  <img src="https://github.com/MUCZ/Starfish/blob/main/img/tunsocket_vpn.png">
-    </p>
+      <p align="center">
+        <img src="https://github.com/MUCZ/Starfish/blob/main/img/tunsocket_vpn.png">
+      </p>
   - 本仓库实现了"my dummy TCP over IP",**可用类似的模式实现'"user-defined protocol" over UDP'**, 与现有网络基础设施兼容的同时使用用户自定义的可靠传输协议，例如，谷歌的QUIC即是这种模式
   - 用于**构建测试程序**，例如构建三次握手的TCP数据包而不用分配缓冲区，**低成本地模拟压力负载或恶意攻击**
 
